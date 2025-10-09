@@ -13,7 +13,7 @@ public class Intake extends LinearOpMode {
     public void runOpMode() {
         // Initialize hardware
         DcMotor intakeMotor = hardwareMap.dcMotor.get(intakeMotor);
-        intakeMotor.setPower(0); // Make sure motor starts off with 0 roation
+        intakeMotor.setPower(0); // Make sure motor starts off with 0 rotation
         boolean intakeOn = false; // Track motor condition
         boolean lastBumperState = false; // For edge detection
 
