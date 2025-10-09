@@ -1,29 +1,25 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@TeleOp
-public class Intake extends LinearOpMode {
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+public class Intake  {
 
-    @Override
-    public void runOpMode() {
-        // Initialize hardware
-        DcMotor intakeMotor = hardwareMap.dcMotor.get(intakeMotor);
+    DcMotor intakeMotor;
+    boolean intakeOn;
+    boolean lastBumperState;
+
+    public Intake (HardwareMap hardwareMap) {
+        DcMotor intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         intakeMotor.setPower(0); // Make sure motor starts off with 0 rotation
-        boolean intakeOn = false; // Track motor condition
-        boolean lastBumperState = false; // For edge detection
+        intakeOn = false; // Track motor condition
+        lastBumperState = false; // For edge detection
+    }
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
-        // Wait for the game to start
-        waitForStart();
-
-        while (opModeIsActive()) {
+    public void update(Gamepad gamepad1, Telemetry telemetry) {
             boolean currentBumperState = gamepad1.right_bumper;
 
             // Detect rising edge: button was not pressed, now it is
@@ -41,4 +37,3 @@ public class Intake extends LinearOpMode {
 
         }
     }
-}

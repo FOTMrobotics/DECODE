@@ -4,8 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+//TODO WHAT IS THIS?
 @TeleOp
-public class ShooterReleaseOpMode extends LinearOpMode {
+public class ShooterRelease extends LinearOpMode {
 
     // Declare the servo
     Servo shooterReleaseServo;
@@ -18,7 +21,7 @@ public class ShooterReleaseOpMode extends LinearOpMode {
     public void runOpMode() {
 
         // Initialize the servo from the hardware map
-        shooterReleaseServo = hardwareMap.get(Servo.class, "armServo");
+        shooterReleaseServo = hardwareMap.get(Servo.class, "shooterReleaseServo");
 
         // Initial arm position (start with the default position)
         shooterReleaseServo.setPosition(ARM_DEFAULT_POSITION);
