@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -13,6 +14,7 @@ public class Flywheel {
 
     public Flywheel(HardwareMap hardwareMap) {
         flywheel = hardwareMap.get(DcMotorEx.class, "flywheel");
+        flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void update(Gamepad gamepad) {
@@ -20,7 +22,7 @@ public class Flywheel {
 
         isPressed = gamepad.a;
 
-        if (state) flywheel.setVelocity(1);
+        if (state) flywheel.setVelocity(2000);
         else flywheel.setVelocity(0);
     }
 }

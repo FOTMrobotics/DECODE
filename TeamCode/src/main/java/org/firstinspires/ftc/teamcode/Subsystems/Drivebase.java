@@ -25,9 +25,11 @@ public class Drivebase {
     public void update(Gamepad gamepad1) {
 
         //sample motor reversal
-        //fLMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        fLMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        bLMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            double y = -gamepad1.left_stick_y;
+
+            double y = -gamepad1.right_stick_y;
             double x = gamepad1.left_stick_x * 1.1;
             double z = gamepad1.right_stick_x;
 
