@@ -26,7 +26,7 @@ public class BlockServoTest extends OpMode {
 
         if (gamepad1.dpad_up && !dUpHeld) pos += incSize;
         else if (gamepad1.dpad_down && !dDownHeld) pos -= incSize;
-        pos = Math.max(0, Math.min(incSize, 1));
+        pos = Math.max(0, Math.min(pos, 1));
 
         blockServo.setPosition(pos);
 
