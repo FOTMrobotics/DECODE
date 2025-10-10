@@ -5,17 +5,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(group = "Tests")
-public class HoodServoTest extends OpMode {
+public class BlockServoTest extends OpMode {
     double pos = 0;
     double incSize = 0.1;
 
-    Servo hoodServo;
+    Servo blockServo;
 
     boolean dUpHeld, dDownHeld, yHeld, aHeld;
 
     @Override
     public void init() {
-        hoodServo = hardwareMap.get(Servo.class, "hoodServo");
+        blockServo = hardwareMap.get(Servo.class, "shooterReleaseServo");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class HoodServoTest extends OpMode {
         else if (gamepad1.dpad_down && !dDownHeld) pos -= incSize;
         pos = Math.max(0, Math.min(incSize, 1));
 
-        hoodServo.setPosition(pos);
+        blockServo.setPosition(pos);
 
         telemetry.addData("Servo at position", pos);
         telemetry.addData("Increments are of size", incSize);
