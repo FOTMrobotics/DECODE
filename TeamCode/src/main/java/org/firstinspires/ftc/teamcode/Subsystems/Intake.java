@@ -24,8 +24,8 @@ public class Intake  {
 
     public void update(Gamepad gamepad1, Telemetry telemetry) {
             if (gamepad1.right_bumper) {
-                intakeMotor1.setPower(1);
-                intakeMotor2.setPower(1);
+                intakeMotor1.setPower(0.65);
+                intakeMotor2.setPower(0.65);
             }else{
                 intakeMotor1.setPower(0);
                 intakeMotor2.setPower(0);

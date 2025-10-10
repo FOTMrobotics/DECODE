@@ -22,7 +22,7 @@ public class Flywheel {
 
         isPressed = gamepad.a;
 
-        if (state) flywheel.setVelocity(2000);
+        if (state) flywheel.setVelocity(3000);
         else flywheel.setVelocity(0);
     }
 }
