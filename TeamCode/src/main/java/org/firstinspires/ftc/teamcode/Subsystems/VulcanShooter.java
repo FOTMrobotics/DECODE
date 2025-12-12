@@ -22,7 +22,7 @@ public class VulcanShooter {
 			shooterState = !shooterState;
 		}
 
-		shooterMotor1.setPower(shooterState ? 0.535 : 0.41);
+		shooterMotor1.setPower(shooterState ? 0.0 : 1000);
 		xIsPressed = gamepad1.x;
 	}
 }
