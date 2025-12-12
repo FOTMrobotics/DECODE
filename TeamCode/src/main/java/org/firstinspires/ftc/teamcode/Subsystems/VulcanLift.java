@@ -49,12 +49,12 @@ public class VulcanLift {
 		}
 
 		telemetry.addData("Lift Position", liftMotor.getPosition());
-		telemetry.addData("Red", ballKnowledge.red());
-		telemetry.addData("Green", ballKnowledge.green());
-		telemetry.addData("Blue", ballKnowledge.blue());
-		telemetry.addData("originalLiftPosition", originalLiftPosition);
-		telemetry.addData("rawLiftPosition", rawLiftPosition);
-		telemetry.addData("relativeLiftPosition", relativeLiftPosition);
+//		telemetry.addData("Red", ballKnowledge.red());
+//		telemetry.addData("Green", ballKnowledge.green());
+//		telemetry.addData("Blue", ballKnowledge.blue());
+//		telemetry.addData("originalLiftPosition", originalLiftPosition);
+//		telemetry.addData("rawLiftPosition", rawLiftPosition);
+//		telemetry.addData("relativeLiftPosition", relativeLiftPosition);
 
 		//telemetry.addData("Proximity", ballKnowledge.);
 	}

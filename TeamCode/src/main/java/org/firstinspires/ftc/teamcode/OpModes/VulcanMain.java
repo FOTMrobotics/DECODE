@@ -35,6 +35,6 @@ public class VulcanMain extends OpMode {
 		vulcanDrivebase.update(gamepad1);
 		vulcanIntake.update(gamepad1);
 		vulcanLift.update(gamepad1, telemetry);
-		vulcanShooter.update(gamepad1);
+		vulcanShooter.update(gamepad1, telemetry);
 	}
 }
