@@ -18,9 +18,12 @@ public class VulcanIntake {
 	public void update(Gamepad gamepad1) {
 		if (gamepad1.right_bumper) {
 			intakeMotor.setPower(0.65);
-		} else {
+		} else if (gamepad1.right_trigger != 0) {
+			intakeMotor.setPower(-gamepad1.right_trigger);
+		}else {
 			intakeMotor.setPower(0);
-		}
+		}//kn/
+
 
 	}
 }

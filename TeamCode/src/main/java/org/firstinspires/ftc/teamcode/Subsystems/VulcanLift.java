@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -27,11 +28,6 @@ public class VulcanLift {
 	}
 
 	public void update(Gamepad gamepad1, Telemetry telemetry) {
-//		if (gamepad1.left_bumper) {
-//			liftMotor.setPosition(0.0);
-//		} else {
-//			liftMotor.setPosition(0.5);
-//		}
 
 
 		rawLiftPosition = (liftEncoder.getVoltage() / 3.3 * 720) % 360;
@@ -42,19 +38,22 @@ public class VulcanLift {
 			;
 		}
 
-		if ((302.6741 > rawLiftPosition || rawLiftPosition > 332.6741) && gamepad1.left_bumper) {
+		if (gamepad1.left_bumper) {
 			liftMotor.setPosition(0.6);
 		} else {
 			liftMotor.setPosition(0.5);
 		}
 
-		telemetry.addData("Lift Position", liftMotor.getPosition());
+
+//		telemetry.addData("Lift Position", liftMotor.());
 //		telemetry.addData("Red", ballKnowledge.red());
 //		telemetry.addData("Green", ballKnowledge.green());
 //		telemetry.addData("Blue", ballKnowledge.blue());
 //		telemetry.addData("originalLiftPosition", originalLiftPosition);
 //		telemetry.addData("rawLiftPosition", rawLiftPosition);
 //		telemetry.addData("relativeLiftPosition", relativeLiftPosition);
+
+
 
 		//telemetry.addData("Proximity", ballKnowledge.);
 	}

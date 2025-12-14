@@ -34,8 +34,8 @@ public class VulcanShooter {
 		telemetry.addData("x", gamepad1.x);
 		telemetry.addData("shooterState", shooterState);
 		telemetry.addData("xIsPressed", xIsPressed);
-		shooterMotor1.setVelocity(shooterState ? 720 : 0);
-		shooterMotor2.setVelocity(shooterState ? 720 : 0);
+		shooterMotor1.setVelocity(shooterState ? 2500 : 0);
+		shooterMotor2.setVelocity(shooterState ? 2500 : 0);
 		telemetry.addData("Motor 1", shooterMotor1.getCurrentPosition() - shooterMotor2.getCurrentPosition());
 		xIsPressed = gamepad1.x;
 	}
