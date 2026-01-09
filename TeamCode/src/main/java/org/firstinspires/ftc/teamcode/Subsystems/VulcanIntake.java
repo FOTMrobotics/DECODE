@@ -22,7 +22,7 @@ public class VulcanIntake {
 			intakeMotor.setPower(-gamepad1.right_trigger);
 		}else {
 			intakeMotor.setPower(0);
-		}//kn/
+		}
 
 
 	}

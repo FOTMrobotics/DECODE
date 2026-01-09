@@ -32,8 +32,8 @@ public class VulcanTurret {
 		turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 		turretMotor.setPower(0.8);
 
-		telemetry.addData("Turret Encoder", turretMotor.getCurrentPosition());
-		telemetry.addData("Target Position", turretTargetPosition);
+//		telemetry.addData("Turret Encoder", turretMotor.getCurrentPosition());
+//		telemetry.addData("Target Position", turretTargetPosition);
 
 
 	}

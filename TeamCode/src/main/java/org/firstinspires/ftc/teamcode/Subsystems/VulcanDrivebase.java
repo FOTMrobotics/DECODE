@@ -30,9 +30,9 @@ public class VulcanDrivebase {
 		double z = -gamepad1.right_stick_x;
 		double denom = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(z), 1);
 
-		double fLPower = (y + x + z) / denom;
+		double fLPower = (y - x + z) / denom;
 		double fRPower = (y - x - z) / denom;
-		double bLPower = (y - x + z) / denom;
+		double bLPower = (y + x + z) / denom;
 		double bRPower = (y + x - z) / denom;
 
 		fLMotor.setPower(fLPower);
@@ -41,4 +41,14 @@ public class VulcanDrivebase {
 		bRMotor.setPower(bRPower);
 
 	}
+
+	public void drive(double power, int runTime) {
+
+	}
+
+	public void turn(double power, int runTime) {
+
+	}
+
+	public void strafe(double power, int runTime) {}
 }
