@@ -18,7 +18,6 @@ public class VulcanLift {
 
 	Servo liftServo;
 	RevColorSensorV3 ballKnowledge;
-	double rawLiftPosition;
 	double targetPosition;
 	double ballDistance;
 	int currentIndex;
@@ -32,7 +31,7 @@ public class VulcanLift {
 //	private PIDF pidf = new PIDF(p, i, d, f);
 
 
-	private final double[] positions = {0.42, 0.55, 0.67, 0.7, 0.8, 1};
+	private final double[] positions = {0.40, 0.52, 0.65, 0.72, 0.84, 0.96};
 
 	public VulcanLift(HardwareMap hardwareMap) {
 
@@ -45,7 +44,24 @@ public class VulcanLift {
 	}
 
 	public void update(Gamepad gamepad1, Telemetry telemetry) {
-		rawLiftPosition = liftServo.getPosition();
+
+		liftActive();
+		currentIndex(gamepad1);
+		setPosition();
+		telemetry(telemetry);
+
+
+	}
+
+	public void liftActive() {
+		if (ballKnowledge.blue() > 50) {
+			liftActive = true;
+		} else if (ballKnowledge.blue() < 50) {
+			liftActive = false;
+		}
+	}
+
+	public void currentIndex(Gamepad gamepad1) {
 		if (gamepad1.left_bumper && !leftBumperIsPressed) {
 			currentIndex = (currentIndex + 1) % positions.length;
 		} else if (ballKnowledge.blue() > 50 && !liftActive) {
@@ -54,33 +70,28 @@ public class VulcanLift {
 			}
 		}
 
-		if (ballKnowledge.blue() > 50) {
-			liftActive = true;
-		} else if (ballKnowledge.blue() < 50) {
-			liftActive = false;
-		}
-
-
- 		targetPosition = (positions[currentIndex]);
+		targetPosition = (positions[currentIndex]);
 		leftBumperIsPressed = gamepad1.left_bumper;
+	}
 
+	public void setPosition() {
 		liftServo.setPosition(targetPosition);
+	}
 
-		ballDistance = ballKnowledge.getDistance(DistanceUnit.INCH);
+	public void addIndex() {
+		currentIndex += currentIndex + 1;
+	}
 
-//		telemetry.addData("Lift Position", liftMotor.());
-		telemetry.addData("Red", ballKnowledge.red());
-		telemetry.addData("Green", ballKnowledge.green());
-		telemetry.addData("Blue", ballKnowledge.blue());
+	public void telemetry(Telemetry telemetry) {
+//		telemetry.addData("Lift Position", liftServo.getPosition());
+//		telemetry.addData("Red", ballKnowledge.red());
+//		telemetry.addData("Green", ballKnowledge.green());
+//		telemetry.addData("Blue", ballKnowledge.blue());
 //		telemetry.addData("originalLiftPosition", originalLiftPosition);
-//		telemetry.addData("rawLiftPosition", rawLiftPosition);
 //		telemetry.addData("Target Position", targetPosition);
-		telemetry.addData("currentIndex", currentIndex);
+//		telemetry.addData("currentIndex", currentIndex);
 //		telemetry.addData("Lift Servo Position", positions[currentIndex]);
-		telemetry.addData("Color Sensor Distance", ballDistance);
+//		telemetry.addData("Color Sensor Distance", ballDistance);
 //		telemetry.addData("relativeLiftPosition", relativeLiftPosition);
-
-
-
 	}
 }

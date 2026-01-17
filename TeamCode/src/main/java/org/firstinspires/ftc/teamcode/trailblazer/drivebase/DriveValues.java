@@ -1,24 +1,27 @@
 package org.firstinspires.ftc.teamcode.trailblazer.drivebase;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.fotmrobotics.trailblazer.PIDF;
-import org.fotmrobotics.trailblazer.Pose2D;
+import org.fotmrobotics.trailblazer.Vector2D;
 
 /**
  * Edit all components here.
+ * All attributes are marked as final by default under the assumption you will keep them
+ * constant throughout your OpModes.
  */
 public class DriveValues {
-    // TODO: Change if necessary.
     /*
     Name of the motors in the configuration
-
+    Control Hub:
     0. Front Left
     1. Front Right
-    2. Back Left
-    3. Back Right
+    Expansion Hub
+    TBD Back Left
+    TBD Back Right
     */
-    String[] motorNames = {
+    static final String[] motorNames = {
             "fLMotor",
             "fRMotor",
             "bLMotor",
@@ -26,34 +29,36 @@ public class DriveValues {
     };
 
     // TODO: Reverse motors if necessary.
-    int[] reverseMotors = {};
+    static final int[] reverseMotors = {
+            1,
+            3
+            //0,
+            //2
+    };
+
+    static final GoBildaPinpointDriver.EncoderDirection[]  odoDir = {
+            GoBildaPinpointDriver.EncoderDirection.FORWARD,
+            GoBildaPinpointDriver.EncoderDirection.REVERSED
+    };
 
     // TODO: Tune the PIDF loops.
-    PIDF positionPID = new PIDF(1, 0,0,0);
-    PIDF headingPID = new PIDF(1, 0,0,0);
+    static final PIDF positionPID = new PIDF(0.06, 0,0.05,0);
+    static final PIDF headingPID = new PIDF(0.01, 0,0,0);
 
     // TODO: Change if necessary.
-    // Name of the SparkFunOTOS in the configuration.
-    String pinpoint = "pinpoint";
-
-    // TODO: Change if necessary.
-    // Position of the SparkFunOTOS relative to the center.
-    Pose2D offset = new Pose2D(0,0, 0);
+    // Position of the GoBildaPinpointDriver relative to the center.
+    static final Vector2D offset = new Vector2D(0,0);
+    static final DistanceUnit offsetUnit = DistanceUnit.MM;
 
     // Units
-    DistanceUnit linearUnit = DistanceUnit.INCH;
-    AngleUnit angularUnit = AngleUnit.DEGREES;
+    static final public DistanceUnit linearUnit = DistanceUnit.INCH;
+    static final public AngleUnit angularUnit = AngleUnit.DEGREES;
 
-    // TODO: Tune the linear and angular scalar.
-
-    // Sets the linear scale for the SparkFunOTOS.
-    double linearScalar = 1;
-
-    // Sets the angular scale for the SparkFunOTOS.
-    double angularScalar = 1;
+    //Type of odom pod used
+    static final public GoBildaPinpointDriver.GoBildaOdometryPods podType = GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD;
 
     // Scale for speed.
-    double xScale = 1;
-    double yScale = 1;
-    double angularScale = 1;
+    static final double xScale = 1;
+    static final double yScale = 1;
+    static final double angularScale = 0.9;
 }

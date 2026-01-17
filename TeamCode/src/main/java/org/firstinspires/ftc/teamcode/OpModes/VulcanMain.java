@@ -52,10 +52,27 @@ public class VulcanMain extends OpMode {
 	public void loop() {
 
 		vulcanDrivebase.update(gamepad1);
-		vulcanIntake.update(gamepad1);
+		vulcanIntake.update(gamepad1, telemetry);
 		vulcanLift.update(gamepad1, telemetry);
 		vulcanShooter.update(gamepad1, telemetry);
 		vulcanHood.update(gamepad2, telemetry);
 		vulcanTurret.update(gamepad2, telemetry);
 	}
 }
+
+
+//  TODO
+// Convert each class from one update function to independent functions - DONE
+// Make sure each system can be called for autonymous - DONE
+// Fix turret limit switch - DONE
+// Code turret auto aim for blue goal - DONE
+// Code turret auto aim for red goal - DONE
+// Code autonymous for blue far zone start
+// Code autonymous for red far zone start
+// Implement PID into turret
+// Code corner reset for TeleOp use
+// Separate auto aim code for Autonymous use - DONE
+// Function for flap height
+// Manual override for turret and hood flap - DONE
+// Fix color sensor for lift
+// Implement PID into lift

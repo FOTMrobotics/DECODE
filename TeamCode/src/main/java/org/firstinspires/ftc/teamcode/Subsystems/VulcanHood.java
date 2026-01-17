@@ -20,6 +20,12 @@ public class VulcanHood {
 	}
 
 	public void update(Gamepad gamepad2, Telemetry telemetry) {
+		setHoodPosition(gamepad2);
+		moveHood(hoodPosition);
+//		telemetry.addData("Target Position", hoodPosition);
+	}
+
+	public void setHoodPosition(Gamepad gamepad2) {
 		if (!dpadUpIsPressed) {
 			if (gamepad2.dpad_up) {
 				hoodPosition += 0.23;
@@ -37,9 +43,9 @@ public class VulcanHood {
 
 		dpadUpIsPressed = gamepad2.dpad_up;
 		dpadDownIsPressed = gamepad2.dpad_down;
-		hoodServo.setPosition(hoodPosition);
+	}
 
-//		telemetry.addData("Target Position", hoodPosition);
-
+	public void moveHood(double hoodLevel) {
+		hoodServo.setPosition(hoodLevel);
 	}
 }

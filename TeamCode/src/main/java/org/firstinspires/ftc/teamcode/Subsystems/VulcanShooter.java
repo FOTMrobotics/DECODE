@@ -14,6 +14,7 @@ public class VulcanShooter {
 	DcMotorEx shooterMotor2;
 	Boolean xIsPressed;
 	Boolean shooterState;
+	double shooterSpeed;
 
 	public VulcanShooter (HardwareMap hardwareMap) {
 		shooterMotor1 = hardwareMap.get(DcMotorEx.class, "shooterMotor1");
@@ -21,22 +22,59 @@ public class VulcanShooter {
 		shooterState = false;
 		xIsPressed = false;
 		shooterMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+		shooterSpeed = 2100;
 	}
 
 	public void update(Gamepad gamepad1, Telemetry telemetry) {
 
+		changeShooterSpeed(gamepad1);
+		setShooterState(gamepad1);
+		shooterOnOff();
+		telemetry(telemetry);
+
+	}
+
+	public void setShooterState(Gamepad gamepad1) {
 		if (!xIsPressed) {
 			if (gamepad1.x) {
 				shooterState = !shooterState;
 			}
 		}
+		xIsPressed = gamepad1.x;
+	}
 
-//		telemetry.addData("x", gamepad1.x);
+	public void shooterOnOff() {
+		if (this.shooterState) {
+			shooterOn(shooterSpeed);
+		} else {
+			shooterOff();
+		}
+	}
+
+	public void shooterOn(double shooterSpeed) {
+		shooterMotor1.setVelocity(shooterSpeed);
+		shooterMotor2.setVelocity(shooterSpeed);
+	}
+
+	public void shooterOff() {
+		shooterMotor1.setVelocity(0);
+		shooterMotor2.setVelocity(0);
+	}
+
+	public void changeShooterSpeed(Gamepad gamepad1) {
+		if (gamepad1.dpad_up) {
+			shooterSpeed += 1;
+		} else if (gamepad1.dpad_down) {
+			shooterSpeed -= 1;
+		}
+	}
+
+
+	public void telemetry(Telemetry telemetry) {
 //		telemetry.addData("shooterState", shooterState);
 //		telemetry.addData("xIsPressed", xIsPressed);
-		shooterMotor1.setVelocity(shooterState ? 2500 : 0);
-		shooterMotor2.setVelocity(shooterState ? 2500 : 0);
 //		telemetry.addData("Shooter Motor Difference", shooterMotor1.getCurrentPosition() - shooterMotor2.getCurrentPosition());
-		xIsPressed = gamepad1.x;
+//		telemetry.addData("Actual Motor Speed", shooterMotor1.getVelocity());
+//		telemetry.addData("Intended Motor Speed", shooterSpeed);
 	}
 }

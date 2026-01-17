@@ -1,58 +1,66 @@
 package org.firstinspires.ftc.teamcode.trailblazer.drivebase;
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorGoBildaPinpoint;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.fotmrobotics.trailblazer.MathKt;
 import org.fotmrobotics.trailblazer.Pose2D;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 
 /**
- * Controls the odometry. Currently supports the SparkFunOTOS.
+ * Controls the odometry. Currently supports the SparkFunOTOS and GoBilda Odom Computers.
  * To change the odometry method, change the methods corresponding to what they do.
  *
  * @author Preston Cokis
  */
 public class Odometry {
-    HardwareMap hardwareMap;
-
-    DriveValues driveValues = new DriveValues();
-
-    private GoBildaPinpointDriver pinpoint;
+    private final GoBildaPinpointDriver odo;
 
     Pose2D currentPos;
     Pose2D lastPos;
 
     public Odometry(HardwareMap hardwareMap) {
-        this.hardwareMap = hardwareMap;
+        odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
 
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, driveValues.pinpoint);
+        odo.setOffsets(DriveValues.offset.getX(),DriveValues.offset.getY(), DriveValues.offsetUnit);
 
-        pinpoint.setOffsets(-170, -14, DistanceUnit.MM);
+        odo.setEncoderDirections(DriveValues.odoDir[0], DriveValues.odoDir[1]);
 
-        pinpoint.recalibrateIMU();
-        pinpoint.resetPosAndIMU();
+        odo.setEncoderResolution(DriveValues.podType);
+
+        odo.resetPosAndIMU();
+
+        currentPos = new Pose2D(0,0,0);
+
+        odo.setPosition(new org.firstinspires.ftc.robotcore.external.navigation.Pose2D(
+                DistanceUnit.MM, 0,0,AngleUnit.RADIANS, 0));
     }
 
     /**
      * Updates the position values.
      */
     public void update() {
-        lastPos = currentPos;
+        lastPos = (Pose2D) currentPos.clone();
+        odo.update();
 
-        pinpoint.update();
-        org.firstinspires.ftc.robotcore.external.navigation.Pose2D position = pinpoint.getPosition();
-        Pose2D pos = new Pose2D(position.getX(DistanceUnit.INCH), -position.getY(DistanceUnit.INCH), position.getHeading(AngleUnit.DEGREES));
-        pos.setH(MathKt.angleWrap(pos.getH()));
-
-        currentPos = pos;
+        currentPos.setX(odo.getPosX(DriveValues.linearUnit));
+        currentPos.setY(odo.getPosY(DriveValues.linearUnit));
+        currentPos.setH(odo.getHeading(DriveValues.angularUnit));
     }
 
     public Pose2D getPosition() {
         update();
         return currentPos;
+    }
+
+    public void setPosition (double x, double y, double h, DistanceUnit dU, AngleUnit aU) {
+        odo.setPosition(new org.firstinspires.ftc.robotcore.external.navigation.Pose2D(
+                dU,
+                x,
+                y,
+                aU,
+                h
+        ));
     }
 
     public Pose2D getLastPosition() {
@@ -63,13 +71,23 @@ public class Odometry {
      * Resets the heading.
      */
     public void resetHeading() {
-        pinpoint.recalibrateIMU();
+        odo.setHeading(0, AngleUnit.DEGREES);
     }
 
     /**
      * Resets the position.
      */
     public void resetPosition() {
-        pinpoint.resetPosAndIMU();
+        odo.setPosX(0, DistanceUnit.MM);
+        odo.setPosY(0, DistanceUnit.MM);
+        odo.setHeading(0, AngleUnit.DEGREES);
+    }
+
+    public int getLoopTime () {
+        return odo.getLoopTime();
+    }
+
+    public double getFrequency () {
+        return odo.getFrequency();
     }
 }
