@@ -1,16 +1,19 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.trailblazer.drivebase.Drive;
+import org.fotmrobotics.trailblazer.PIDF;
 import org.fotmrobotics.trailblazer.Pose2D;
 
-public class VulcanTurret {
+public class VulcanTurretBlue {
 	// TeleOp Turret
 	DcMotorEx turretMotor;
 	DigitalChannel turretLimitSwitch;
@@ -30,11 +33,15 @@ public class VulcanTurret {
 	double autoAimTurretTargetAngle;
 	Drive drive;
 	boolean bIsPressed;
-	boolean xIsPressed;
+	double xStartPosition;
+	double yStartPosition;
+	double xTargetPosition;
+	double yTargetPosition;
+	GoBildaPinpointDriver pinpoint;
 
 
 
-	public VulcanTurret (HardwareMap hardwareMap) {
+	public VulcanTurretBlue(HardwareMap hardwareMap) {
 		turretMotor = hardwareMap.get(DcMotorEx.class, "turretMotor");
 		turretLimitSwitch = hardwareMap.get(DigitalChannel.class, "turretLimitSwitch");
 		turretMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -43,11 +50,20 @@ public class VulcanTurret {
 
 		aIsPressed = false;
 		manualOverride = false;
+		xStartPosition = 54.5;
+		yStartPosition = 8.75;
+		xTargetPosition = 6;
+		yTargetPosition = 138;
 
 		drive = new Drive(hardwareMap);
+		pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+
+
+//		turretMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(0.1, 0, 0, 0));
 	}
 
 	public void update (Gamepad gamepad2, Telemetry telemetry) {
+
 		if (!startupCompleted) {
 			startupReset();
 			telemetryPrintout(telemetry);
@@ -57,8 +73,9 @@ public class VulcanTurret {
 				toAngle(turretTargetAngle);
 				telemetryPrintout(telemetry);
 			} else {
-				setAutoAimTurretTargetAngle(54.5, 8.75, 6, 138);
+				setAutoAimTurretTargetAngle(xStartPosition, yStartPosition, xTargetPosition, yTargetPosition);
 				toAngle(autoAimTurretTargetAngle);
+				odometryReset(gamepad2);
 				autoTurretTelemetryPrintout(telemetry);
 			}
 		}
@@ -76,7 +93,7 @@ public class VulcanTurret {
 	}
 
 	public void toAngle(double angle) {
-		turretMotor.setTargetPosition((int)angleToEncoder(-angle));
+		turretMotor.setTargetPosition((int)angleToEncoder(-angle) + 10);
 		turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 		turretMotor.setPower(0.8);
 	}
@@ -111,14 +128,14 @@ public class VulcanTurret {
 //		telemetry.addData("Turret Encoder Position", turretMotor.getCurrentPosition());
 //		telemetry.addData("Encoder to Angle", encoderToAngle());
 //		telemetry.addData("Angle to Encoder", angleToEncoder(turretTargetAngle));
-//		telemetry.addData("Target Angle", turretTargetAngle);
-//		telemetry.addData("turret target position", turretTargetPosition);
+		telemetry.addData("Target Angle", turretTargetAngle);
+		telemetry.addData("turret target position", turretTargetPosition);
 		telemetry.addData("startup completed", startupCompleted);
 
 	}
 
 	//AUTO AIM FUNCTIONS
-
+//	public void startAndTargetPositions() {}
 	public void setAutoAimTurretTargetAngle(double xStartPosition, double yStartPosition, double xTargetPosition, double yTargetPosition) {
 		Pose2D position = drive.odometry.getPosition();
 
@@ -142,16 +159,16 @@ public class VulcanTurret {
 		return manualOverride;
 	}
 
-	public void manualOverride(Gamepad gamepad2) {
+	public void odometryReset(Gamepad gamepad2) {
 		if (!bIsPressed && gamepad2.b) {
-			turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-			setAutoAimTurretTargetAngle(137.375, 8.75, 6, 138);
-		} else if (!xIsPressed && gamepad2.x) {
-			turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-			setAutoAimTurretTargetAngle(6.625, 8.75, 138, 138);
+			pinpoint.resetPosAndIMU();
+			xStartPosition = 137.375;
+			yStartPosition = 8.75;
+			xTargetPosition = 6;
+			yTargetPosition = 138;
 		}
+
 		bIsPressed = gamepad2.b;
-		xIsPressed = gamepad2.x;
 	}
 		
 	public void autoTurretTelemetryPrintout(Telemetry telemetry) {

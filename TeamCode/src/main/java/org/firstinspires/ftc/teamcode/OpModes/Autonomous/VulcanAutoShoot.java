@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.OpModes.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.VulcanHood;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanIntake;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanLift;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanShooter;
-import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurret;
+import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurretRed;
 
 @Autonomous
 public class VulcanAutoShoot extends LinearOpMode {
@@ -23,7 +22,7 @@ public class VulcanAutoShoot extends LinearOpMode {
 	VulcanIntake vulcanIntake;
 	VulcanLift vulcanLift;
 	VulcanShooter vulcanShooter;
-	VulcanTurret vulcanTurret;
+	VulcanTurretRed vulcanTurret;
 
 
 	DcMotor bLMotor;
@@ -47,7 +46,7 @@ public class VulcanAutoShoot extends LinearOpMode {
 		vulcanIntake = new VulcanIntake(hardwareMap);
 		vulcanLift = new VulcanLift(hardwareMap);
 		vulcanShooter = new VulcanShooter(hardwareMap);
-		vulcanTurret = new VulcanTurret(hardwareMap);
+		vulcanTurret = new VulcanTurretRed(hardwareMap);
 
 		bLMotor = hardwareMap.get(DcMotor.class, "bLMotor");
 		bRMotor = hardwareMap.get(DcMotor.class, "bRMotor");

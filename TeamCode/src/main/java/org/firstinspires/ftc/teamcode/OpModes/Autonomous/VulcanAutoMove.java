@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.VulcanHood;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanIntake;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanLift;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanShooter;
-import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurret;
+import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurretRed;
 
 @Autonomous
 public class VulcanAutoMove extends LinearOpMode {
@@ -20,7 +20,7 @@ public class VulcanAutoMove extends LinearOpMode {
 	VulcanIntake vulcanIntake;
 	VulcanLift vulcanLift;
 	VulcanShooter vulcanShooter;
-	VulcanTurret vulcanTurret;
+	VulcanTurretRed vulcanTurret;
 
 
 	DcMotor bLMotor;
@@ -40,7 +40,7 @@ public class VulcanAutoMove extends LinearOpMode {
 		vulcanIntake = new VulcanIntake(hardwareMap);
 		vulcanLift = new VulcanLift(hardwareMap);
 		vulcanShooter = new VulcanShooter(hardwareMap);
-		vulcanTurret = new VulcanTurret(hardwareMap);
+		vulcanTurret = new VulcanTurretRed(hardwareMap);
 
 		bLMotor = hardwareMap.get(DcMotor.class, "bLMotor");
 		bRMotor = hardwareMap.get(DcMotor.class, "bRMotor");

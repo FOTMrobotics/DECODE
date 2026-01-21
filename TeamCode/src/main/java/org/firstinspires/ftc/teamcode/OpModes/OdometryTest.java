@@ -2,22 +2,18 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.trailblazer.drivebase.Drive;
-import org.firstinspires.ftc.teamcode.trailblazer.drivebase.GoBildaPinpointDriver;
-import org.firstinspires.ftc.teamcode.trailblazer.drivebase.Odometry;
-import org.firstinspires.ftc.teamcode.trailblazer.drivebase.DriveValues;
 import org.fotmrobotics.trailblazer.Pose2D;
 
-import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurret;
+import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurretRed;
 
 
 @TeleOp
 public class OdometryTest extends OpMode {
 
 	Drive drive;
-	VulcanTurret vulcanTurret;
+	VulcanTurretRed vulcanTurret;
 	double vulkanXPosition;
 	double vulkanYPosition;
 	double xOffsetFromTarget;
@@ -29,7 +25,7 @@ public class OdometryTest extends OpMode {
 
 	public void init() {
 		drive = new Drive(hardwareMap);
-		vulcanTurret = new VulcanTurret(hardwareMap);
+		vulcanTurret = new VulcanTurretRed(hardwareMap);
 
 		Pose2D position = drive.odometry.getPosition();
 

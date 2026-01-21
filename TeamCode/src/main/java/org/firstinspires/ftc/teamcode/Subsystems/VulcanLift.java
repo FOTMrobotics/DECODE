@@ -23,6 +23,7 @@ public class VulcanLift {
 	int currentIndex;
 	boolean leftBumperIsPressed;
 	boolean liftActive;
+	boolean bIsPressed;
 
 //	private double p = 0;
 //	private double i = 0;
@@ -40,6 +41,7 @@ public class VulcanLift {
 
 		currentIndex = 0;
 		leftBumperIsPressed = false;
+		bIsPressed = false;
 		liftActive = false;
 	}
 
@@ -47,6 +49,8 @@ public class VulcanLift {
 
 		liftActive();
 		currentIndex(gamepad1);
+		resetLift(gamepad1);
+		indexToTargetPosition(currentIndex);
 		setPosition();
 		telemetry(telemetry);
 
@@ -70,16 +74,27 @@ public class VulcanLift {
 			}
 		}
 
-		targetPosition = (positions[currentIndex]);
 		leftBumperIsPressed = gamepad1.left_bumper;
+	}
+
+	public void indexToTargetPosition(int currentIndex) {
+		targetPosition = (positions[currentIndex]);
 	}
 
 	public void setPosition() {
 		liftServo.setPosition(targetPosition);
 	}
 
-	public void addIndex() {
-		currentIndex += currentIndex + 1;
+	public int addIndex() {
+		currentIndex += 1;
+		return currentIndex;
+	}
+
+	public void resetLift(Gamepad gamepad1) {
+		if (!bIsPressed && gamepad1.b) {
+			currentIndex = 0;
+		}
+		bIsPressed = gamepad1.b;
 	}
 
 	public void telemetry(Telemetry telemetry) {

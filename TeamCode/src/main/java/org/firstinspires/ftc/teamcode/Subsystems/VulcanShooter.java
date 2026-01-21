@@ -22,7 +22,7 @@ public class VulcanShooter {
 		shooterState = false;
 		xIsPressed = false;
 		shooterMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
-		shooterSpeed = 2100;
+		shooterSpeed = 1850;
 	}
 
 	public void update(Gamepad gamepad1, Telemetry telemetry) {
@@ -72,9 +72,10 @@ public class VulcanShooter {
 
 	public void telemetry(Telemetry telemetry) {
 //		telemetry.addData("shooterState", shooterState);
+
 //		telemetry.addData("xIsPressed", xIsPressed);
 //		telemetry.addData("Shooter Motor Difference", shooterMotor1.getCurrentPosition() - shooterMotor2.getCurrentPosition());
-//		telemetry.addData("Actual Motor Speed", shooterMotor1.getVelocity());
-//		telemetry.addData("Intended Motor Speed", shooterSpeed);
+		telemetry.addData("Actual Motor Speed", shooterMotor1.getVelocity());
+		telemetry.addData("Intended Motor Speed", shooterSpeed);
 	}
 }
