@@ -50,7 +50,13 @@ public class VulcanMainBlue extends OpMode {
 		vulcanIntake.update(gamepad1, telemetry);
 		vulcanLift.update(gamepad1, telemetry);
 		vulcanShooter.update(gamepad1, telemetry);
-		vulcanHood.update(gamepad2, telemetry);
+		vulcanHood.update(vulcanTurretBlue.hoodAutoLevelFunction(),gamepad2, telemetry);
 		vulcanTurretBlue.update(gamepad2, telemetry);
 	}
 }
+
+
+// TODO
+//Automation:
+//  Condense odometry for hood and turret into one automation file
+// Leave comments on each function to understand code in the future

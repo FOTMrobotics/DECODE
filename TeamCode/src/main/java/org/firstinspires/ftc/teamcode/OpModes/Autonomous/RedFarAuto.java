@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanHood;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanIntake;
@@ -23,50 +24,82 @@ public class RedFarAuto extends LinearOpMode {
 	VulcanShooter vulcanShooter = new VulcanShooter(hardwareMap);
 	VulcanTurretBlue vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
 	VulcanTurretRed vulcanTurretRed = new VulcanTurretRed(hardwareMap);
+	ElapsedTime timer = new ElapsedTime();
 
 	@Override
 	public void runOpMode() throws InterruptedException {
 		Path path = new PathBuilder(drive, new Vector2D(0,0))
 				.point(new Vector2D(0, 5))
-				.action(0.3, () -> {
-					// do something
-					vulcanTurretRed.toAngle(vulcanTurretRed.setAutoAimTurretTargetAngle(89.5, 8.75, 138, 138));
-					return false;
-				})
+				.pause(() -> timer.seconds() >= 5)
+//				.action(0.3, () -> {
+//					// do something
+//					vulcanTurretRed.toAngle(vulcanTurretRed.setAutoAimTurretTargetAngle(89.5, 8.75, 138, 138));
+//					return false;
+//				})
 
-				.action(0.5, () -> {
-					// do something
-					vulcanShooter.shooterOn(1800);
-				})
+//				.action(0.5, () -> {
+//					// do something
+//					vulcanShooter.shooterOn(1800);
+//				})
 
 				.point(new Vector2D(5, 5))
 
-				.action(() -> {
-					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
-					vulcanLift.setPosition();
-				})
+//				.action(() -> {
+//					timer.reset();
+//					while (opModeIsActive() && timer.milliseconds() < 500) {
+//						telemetry.addData("Waiting", timer.milliseconds());
+//						telemetry.update();
+//					}
+//				})
 
-				.point(new Vector2D(0, 5))
-				.point(new Vector2D(5, 5))
+				//shot1
+//				.action(() -> {
+//					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
+//					vulcanLift.setPosition();
+//				})
 
-				.action(() -> {
-					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
-					vulcanLift.setPosition();
-				})
+//				.action(() -> {
+//					timer.reset();
+//					while (opModeIsActive() && timer.milliseconds() < 500) {
+//						telemetry.addData("Waiting", timer.milliseconds());
+//						telemetry.update();
+//					}
+//				})
 
-				.point(new Vector2D(0, 5))
-				.point(new Vector2D(5, 5))
+				// shot 2
+//				.action(() -> {
+//					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
+//					vulcanLift.setPosition();
+//				})
 
-				.action(() -> {
-					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
-					vulcanLift.setPosition();
-				})
+//				.action(() -> {
+//					timer.reset();
+//					while (opModeIsActive() && timer.milliseconds() < 500) {
+//						telemetry.addData("Waiting", timer.milliseconds());
+//						telemetry.update();
+//					}
+//				})
 
-				.action(() -> {
-					vulcanShooter.shooterOff();
-				})
+				// shot 3
+//				.action(() -> {
+//					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
+//					vulcanLift.setPosition();
+//				})
 
-				.point(new Vector2D(0, 0))
+//				.action(() -> {
+//					timer.reset();
+//					while (opModeIsActive() && timer.milliseconds() < 500) {
+//						telemetry.addData("Waiting", timer.milliseconds());
+//						telemetry.update();
+//					}
+//				})
+
+
+//				.action(() -> {
+//					vulcanShooter.shooterOff();
+//				})
+
+//				.point(new Vector2D(0, 0))
 				.build();
 
 		path.run();

@@ -60,7 +60,7 @@ public class VulcanTurretRed {
 
 		pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
 
-//		turretMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(0.1, 0, 0, 0));
+		turretMotor.setPositionPIDFCoefficients(10);
 	}
 
 	public void update (Gamepad gamepad2, Telemetry telemetry) {

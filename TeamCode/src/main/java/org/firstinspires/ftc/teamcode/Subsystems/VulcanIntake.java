@@ -41,6 +41,6 @@ public class VulcanIntake {
 	}
 
 	public void telemetry(Telemetry telemetry) {
-		telemetry.addData("Intake Power", intakePower);
+//		telemetry.addData("Intake Power", intakePower);
 	}
 }

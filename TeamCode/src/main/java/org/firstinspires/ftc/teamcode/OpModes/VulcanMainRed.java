@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.VulcanHood;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanIntake;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanLift;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanShooter;
+import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurretBlue;
 import org.firstinspires.ftc.teamcode.Subsystems.VulcanTurretRed;
 
 @TeleOp
@@ -18,6 +19,7 @@ public class VulcanMainRed extends OpMode {
 	VulcanLift vulcanLift;
 	VulcanShooter vulcanShooter;
 	VulcanTurretRed vulcanTurret;
+	VulcanTurretBlue vulcanTurretBlue;
 
 //	Drive drive;
 //	DriveValues driveValues;
@@ -35,6 +37,7 @@ public class VulcanMainRed extends OpMode {
 		vulcanLift = new VulcanLift(hardwareMap);
 		vulcanShooter = new VulcanShooter(hardwareMap);
 		vulcanTurret = new VulcanTurretRed(hardwareMap);
+		vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
 
 //		drive = new Drive(hardwareMap);
 //		odometry = new Odometry(hardwareMap);
@@ -48,25 +51,8 @@ public class VulcanMainRed extends OpMode {
 		vulcanIntake.update(gamepad1, telemetry);
 		vulcanLift.update(gamepad1, telemetry);
 		vulcanShooter.update(gamepad1, telemetry);
-		vulcanHood.update(gamepad2, telemetry);
+		vulcanHood.update(vulcanTurretBlue.hoodAutoLevelFunction(), gamepad2, telemetry);
 		vulcanTurret.update(gamepad2, telemetry);
 	}
 }
 
-
-//  TODO
-// Convert each class from one update function to independent functions - DONE
-// Make sure each system can be called for autonymous - DONE
-// Fix turret limit switch - DONE
-// Code turret auto aim for blue goal - DONE
-// Code turret auto aim for red goal - DONE
-// Code autonymous for blue far zone start
-// Code autonymous for red far zone start
-// Implement PID into turret - DONE
-// Code red corner reset for TeleOp use - DONE
-// Code blue corner reset for TeleOp use - DONE
-// Separate auto aim code for Autonymous use - DONE
-// Function for flap height
-// Manual override for turret and hood flap - DONE
-// Fix color sensor for lift - DONE(?)
-// Implement PID into lift - DONE

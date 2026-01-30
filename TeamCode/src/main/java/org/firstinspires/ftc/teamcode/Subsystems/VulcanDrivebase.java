@@ -26,7 +26,7 @@ public class VulcanDrivebase {
 	public void update(Gamepad gamepad1) {
 
 		double x = -gamepad1.left_stick_x;
-		double y = gamepad1.left_stick_y;
+		double y = gamepad1.right_stick_y;
 		double z = -gamepad1.right_stick_x;
 		double denom = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(z), 1);
 

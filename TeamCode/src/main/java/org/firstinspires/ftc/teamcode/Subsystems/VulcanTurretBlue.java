@@ -39,6 +39,8 @@ public class VulcanTurretBlue {
 	double yTargetPosition;
 	GoBildaPinpointDriver pinpoint;
 
+	//Auto Aim Hood
+	double distanceFromGoal;
 
 
 	public VulcanTurretBlue(HardwareMap hardwareMap) {
@@ -58,8 +60,7 @@ public class VulcanTurretBlue {
 		drive = new Drive(hardwareMap);
 		pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
 
-
-//		turretMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(0.1, 0, 0, 0));
+		turretMotor.setPositionPIDFCoefficients(10);
 	}
 
 	public void update (Gamepad gamepad2, Telemetry telemetry) {
@@ -72,11 +73,15 @@ public class VulcanTurretBlue {
 				setTargetAngle(gamepad2);
 				toAngle(turretTargetAngle);
 				telemetryPrintout(telemetry);
+				calculateDistanceFromGoal();
+
+
 			} else {
 				setAutoAimTurretTargetAngle(xStartPosition, yStartPosition, xTargetPosition, yTargetPosition);
 				toAngle(autoAimTurretTargetAngle);
 				odometryReset(gamepad2);
 				autoTurretTelemetryPrintout(telemetry);
+				calculateDistanceFromGoal();
 			}
 		}
 
@@ -128,9 +133,10 @@ public class VulcanTurretBlue {
 //		telemetry.addData("Turret Encoder Position", turretMotor.getCurrentPosition());
 //		telemetry.addData("Encoder to Angle", encoderToAngle());
 //		telemetry.addData("Angle to Encoder", angleToEncoder(turretTargetAngle));
-		telemetry.addData("Target Angle", turretTargetAngle);
-		telemetry.addData("turret target position", turretTargetPosition);
-		telemetry.addData("startup completed", startupCompleted);
+//		telemetry.addData("Target Angle", turretTargetAngle);
+//		telemetry.addData("turret target position", turretTargetPosition);
+//		telemetry.addData("startup completed", startupCompleted);
+		telemetry.addData("Distance From Goal", distanceFromGoal);
 
 	}
 
@@ -166,9 +172,18 @@ public class VulcanTurretBlue {
 			yStartPosition = 8.75;
 			xTargetPosition = 6;
 			yTargetPosition = 138;
+			startupCompleted = false;
 		}
 
 		bIsPressed = gamepad2.b;
+	}
+
+	public void calculateDistanceFromGoal() {
+		distanceFromGoal = Math.sqrt(Math.pow(xTargetPosition - vulkanXPosition, 2) + Math.pow(yTargetPosition - vulkanYPosition, 2));
+	}
+
+	public double hoodAutoLevelFunction() {
+		return (-0.0194*distanceFromGoal + 2.9927);
 	}
 		
 	public void autoTurretTelemetryPrintout(Telemetry telemetry) {
@@ -176,10 +191,21 @@ public class VulcanTurretBlue {
 	//	telemetry.addData("Y", position.getY());
 	//	telemetry.addData("Angle", position.getH());
 
+	//	telemetry.addData("X Target Position", xTargetPosition);
+	//	telemetry.addData("Y Target Position", yTargetPosition);
+	//	telemetry.addData("---------- Break ----------", 0000000000);
+	//	telemetry.addData("---------- Break ----------", 0000000000);
+	//	telemetry.addData("X Start Position", xStartPosition);
+	//	telemetry.addData("Y Start Position", yStartPosition);
+	//	telemetry.addData("---------- Break ----------", 0000000000);
+	//	telemetry.addData("Telemetry Raw X Position", drive.odometry.getPosition().getX());
+	//	telemetry.addData("Telemetry Raw Y Position", drive.odometry.getPosition().getY());
+	//	telemetry.addData("---------- Break ----------", 0000000000);
 	//	telemetry.addData("Vulkan X Position", vulkanXPosition);
 	//	telemetry.addData("Vulkan Y Position", vulkanYPosition);
 	//	telemetry.addData("💥💥💥Angle Offset💥💥💥", angleOffset);
 	//	telemetry.addData("Auto Aim Turret Target Angle", autoAimTurretTargetAngle);
+		telemetry.addData("Distance From Goal", distanceFromGoal);
 	}
 }
 

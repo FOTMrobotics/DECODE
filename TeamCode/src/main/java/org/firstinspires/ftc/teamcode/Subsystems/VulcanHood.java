@@ -12,6 +12,7 @@ public class VulcanHood {
 		boolean dpadUpIsPressed;
 		boolean dpadDownIsPressed;
 
+
 	public VulcanHood (HardwareMap hardwareMap) {
 		hoodServo = hardwareMap.get(Servo.class, "hoodServo");
 		hoodPosition = 0.96;
@@ -19,22 +20,25 @@ public class VulcanHood {
 		dpadUpIsPressed = false;
 	}
 
-	public void update(Gamepad gamepad2, Telemetry telemetry) {
+	public void update(double autoHoodLevel, Gamepad gamepad2, Telemetry telemetry) {
 		setHoodPosition(gamepad2);
+//		moveHood(autoHoodLevel);
 		moveHood(hoodPosition);
-//		telemetry.addData("Target Position", hoodPosition);
+		telemetry.addData("Target Position", hoodPosition);
 	}
 
 	public void setHoodPosition(Gamepad gamepad2) {
 		if (!dpadUpIsPressed) {
 			if (gamepad2.dpad_up) {
-				hoodPosition += 0.23;
+			//	hoodPosition += 0.23;
+				hoodPosition += 0.05;
 			}
 		}
 
 		if (!dpadDownIsPressed) {
 			if (gamepad2.dpad_down) {
-				hoodPosition -= 0.23;
+			//	hoodPosition -= 0.23;
+				hoodPosition -= 0.05;
 			}
 		}
 
