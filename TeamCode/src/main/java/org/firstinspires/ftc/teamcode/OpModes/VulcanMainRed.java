@@ -18,7 +18,7 @@ public class VulcanMainRed extends OpMode {
 	VulcanIntake vulcanIntake;
 	VulcanLift vulcanLift;
 	VulcanShooter vulcanShooter;
-	VulcanTurretRed vulcanTurret;
+	VulcanTurretRed vulcanTurretRed;
 	VulcanTurretBlue vulcanTurretBlue;
 
 //	Drive drive;
@@ -36,7 +36,7 @@ public class VulcanMainRed extends OpMode {
 		vulcanIntake = new VulcanIntake(hardwareMap);
 		vulcanLift = new VulcanLift(hardwareMap);
 		vulcanShooter = new VulcanShooter(hardwareMap);
-		vulcanTurret = new VulcanTurretRed(hardwareMap);
+		vulcanTurretRed = new VulcanTurretRed(hardwareMap);
 		vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
 
 //		drive = new Drive(hardwareMap);
@@ -50,9 +50,9 @@ public class VulcanMainRed extends OpMode {
 		vulcanDrivebase.update(gamepad1);
 		vulcanIntake.update(gamepad1, telemetry);
 		vulcanLift.update(gamepad1, telemetry);
-		vulcanShooter.update(gamepad1, telemetry);
-		vulcanHood.update(vulcanTurretBlue.hoodAutoLevelFunction(), gamepad2, telemetry);
-		vulcanTurret.update(gamepad2, telemetry);
+		vulcanShooter.update(vulcanTurretRed.shooterSpeedDecision(),gamepad1, telemetry);
+		vulcanHood.update(gamepad2, telemetry);
+		vulcanTurretRed.update(gamepad2, telemetry);
 	}
 }
 

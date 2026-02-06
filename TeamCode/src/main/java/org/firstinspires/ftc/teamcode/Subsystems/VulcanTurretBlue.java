@@ -38,6 +38,7 @@ public class VulcanTurretBlue {
 	double xTargetPosition;
 	double yTargetPosition;
 	GoBildaPinpointDriver pinpoint;
+	double driver2TurretCorrection;
 
 	//Auto Aim Hood
 	double distanceFromGoal;
@@ -56,6 +57,7 @@ public class VulcanTurretBlue {
 		yStartPosition = 8.75;
 		xTargetPosition = 6;
 		yTargetPosition = 138;
+		driver2TurretCorrection = 0;
 
 		drive = new Drive(hardwareMap);
 		pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
@@ -75,10 +77,10 @@ public class VulcanTurretBlue {
 				telemetryPrintout(telemetry);
 				calculateDistanceFromGoal();
 
-
 			} else {
 				setAutoAimTurretTargetAngle(xStartPosition, yStartPosition, xTargetPosition, yTargetPosition);
-				toAngle(autoAimTurretTargetAngle);
+				driver2TurretCorrection(gamepad2);
+				toAngle(autoAimTurretTargetAngle + 13 + driver2TurretCorrection);
 				odometryReset(gamepad2);
 				autoTurretTelemetryPrintout(telemetry);
 				calculateDistanceFromGoal();
@@ -157,6 +159,12 @@ public class VulcanTurretBlue {
 		}
 	}
 
+	public void driver2TurretCorrection(Gamepad gamepad2) {
+		if (gamepad2.left_stick_x != 0) {
+			driver2TurretCorrection += gamepad2.left_stick_x/3;
+		}
+	}
+
 	public boolean aimingManualOverride(Gamepad gamepad2) {
 		if (!aIsPressed && gamepad2.a) {
 			manualOverride = !manualOverride;
@@ -182,8 +190,18 @@ public class VulcanTurretBlue {
 		distanceFromGoal = Math.sqrt(Math.pow(xTargetPosition - vulkanXPosition, 2) + Math.pow(yTargetPosition - vulkanYPosition, 2));
 	}
 
-	public double hoodAutoLevelFunction() {
-		return (-0.0194*distanceFromGoal + 2.9927);
+//	public double hoodAutoLevelFunction() {
+//		return (-0.0194*distanceFromGoal + 2.9927);
+//	}
+
+	public int shooterSpeedDecision() {
+		if (distanceFromGoal > 115) {
+			return 2100;
+		} else if (85 < distanceFromGoal && distanceFromGoal < 115) {
+			return 1800;
+		} else {
+			return 1500;
+		}
 	}
 		
 	public void autoTurretTelemetryPrintout(Telemetry telemetry) {
@@ -206,6 +224,7 @@ public class VulcanTurretBlue {
 	//	telemetry.addData("💥💥💥Angle Offset💥💥💥", angleOffset);
 	//	telemetry.addData("Auto Aim Turret Target Angle", autoAimTurretTargetAngle);
 		telemetry.addData("Distance From Goal", distanceFromGoal);
+		telemetry.addData("Turret Correction", driver2TurretCorrection);
 	}
 }
 

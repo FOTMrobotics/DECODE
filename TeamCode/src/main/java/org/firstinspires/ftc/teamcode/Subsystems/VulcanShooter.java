@@ -25,11 +25,11 @@ public class VulcanShooter {
 		shooterSpeed = 2050;
 	}
 
-	public void update(Gamepad gamepad1, Telemetry telemetry) {
+	public void update(int shooterSpeed, Gamepad gamepad1, Telemetry telemetry) {
 
 		changeShooterSpeed(gamepad1);
 		setShooterState(gamepad1);
-		shooterOnOff();
+		shooterOnOff(shooterSpeed);
 		telemetry(telemetry);
 
 	}
@@ -43,7 +43,7 @@ public class VulcanShooter {
 		xIsPressed = gamepad1.x;
 	}
 
-	public void shooterOnOff() {
+	public void shooterOnOff(int shooterSpeed) {
 		if (this.shooterState) {
 			shooterOn(shooterSpeed);
 		} else {

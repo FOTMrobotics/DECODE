@@ -15,12 +15,12 @@ public class VulcanHood {
 
 	public VulcanHood (HardwareMap hardwareMap) {
 		hoodServo = hardwareMap.get(Servo.class, "hoodServo");
-		hoodPosition = 0.96;
+		hoodPosition = 0.04;
 		dpadDownIsPressed = false;
 		dpadUpIsPressed = false;
 	}
 
-	public void update(double autoHoodLevel, Gamepad gamepad2, Telemetry telemetry) {
+	public void update(Gamepad gamepad2, Telemetry telemetry) {
 		setHoodPosition(gamepad2);
 //		moveHood(autoHoodLevel);
 		moveHood(hoodPosition);

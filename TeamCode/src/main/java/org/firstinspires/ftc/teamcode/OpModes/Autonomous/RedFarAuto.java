@@ -18,91 +18,25 @@ import org.fotmrobotics.trailblazer.Vector2D;
 @Autonomous
 public class RedFarAuto extends LinearOpMode {
 	Drive drive = new Drive(hardwareMap);
-	VulcanHood vulcanHood = new VulcanHood(hardwareMap);
-	VulcanIntake vulcanIntake = new VulcanIntake(hardwareMap);
-	VulcanLift vulcanLift = new VulcanLift(hardwareMap);
-	VulcanShooter vulcanShooter = new VulcanShooter(hardwareMap);
-	VulcanTurretBlue vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
-	VulcanTurretRed vulcanTurretRed = new VulcanTurretRed(hardwareMap);
+//	VulcanHood vulcanHood = new VulcanHood(hardwareMap);
+//	VulcanIntake vulcanIntake = new VulcanIntake(hardwareMap);
+//	VulcanLift vulcanLift = new VulcanLift(hardwareMap);
+//	VulcanShooter vulcanShooter = new VulcanShooter(hardwareMap);
+//	VulcanTurretBlue vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
+//	VulcanTurretRed vulcanTurretRed = new VulcanTurretRed(hardwareMap);
 	ElapsedTime timer = new ElapsedTime();
 
 	@Override
 	public void runOpMode() throws InterruptedException {
 		Path path = new PathBuilder(drive, new Vector2D(0,0))
 				.point(new Vector2D(0, 5))
-				.pause(() -> timer.seconds() >= 5)
-//				.action(0.3, () -> {
-//					// do something
-//					vulcanTurretRed.toAngle(vulcanTurretRed.setAutoAimTurretTargetAngle(89.5, 8.75, 138, 138));
-//					return false;
-//				})
 
-//				.action(0.5, () -> {
-//					// do something
-//					vulcanShooter.shooterOn(1800);
-//				})
+				.point(new Vector2D(20, 20))
 
-				.point(new Vector2D(5, 5))
-
-//				.action(() -> {
-//					timer.reset();
-//					while (opModeIsActive() && timer.milliseconds() < 500) {
-//						telemetry.addData("Waiting", timer.milliseconds());
-//						telemetry.update();
-//					}
-//				})
-
-				//shot1
-//				.action(() -> {
-//					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
-//					vulcanLift.setPosition();
-//				})
-
-//				.action(() -> {
-//					timer.reset();
-//					while (opModeIsActive() && timer.milliseconds() < 500) {
-//						telemetry.addData("Waiting", timer.milliseconds());
-//						telemetry.update();
-//					}
-//				})
-
-				// shot 2
-//				.action(() -> {
-//					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
-//					vulcanLift.setPosition();
-//				})
-
-//				.action(() -> {
-//					timer.reset();
-//					while (opModeIsActive() && timer.milliseconds() < 500) {
-//						telemetry.addData("Waiting", timer.milliseconds());
-//						telemetry.update();
-//					}
-//				})
-
-				// shot 3
-//				.action(() -> {
-//					vulcanLift.indexToTargetPosition(vulcanLift.addIndex());
-//					vulcanLift.setPosition();
-//				})
-
-//				.action(() -> {
-//					timer.reset();
-//					while (opModeIsActive() && timer.milliseconds() < 500) {
-//						telemetry.addData("Waiting", timer.milliseconds());
-//						telemetry.update();
-//					}
-//				})
-
-
-//				.action(() -> {
-//					vulcanShooter.shooterOff();
-//				})
-
-//				.point(new Vector2D(0, 0))
 				.build();
 
 		path.run();
 
 	}
+
 }
