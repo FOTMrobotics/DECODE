@@ -38,7 +38,7 @@ public class VulcanTurretBlue {
 	double xTargetPosition;
 	double yTargetPosition;
 	GoBildaPinpointDriver pinpoint;
-	double driver2TurretCorrection;
+	double driver1TurretCorrection;
 
 	//Auto Aim Hood
 	double distanceFromGoal;
@@ -57,7 +57,7 @@ public class VulcanTurretBlue {
 		yStartPosition = 8.75;
 		xTargetPosition = 6;
 		yTargetPosition = 138;
-		driver2TurretCorrection = 0;
+		driver1TurretCorrection = 0;
 
 		drive = new Drive(hardwareMap);
 		pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
@@ -65,7 +65,7 @@ public class VulcanTurretBlue {
 		turretMotor.setPositionPIDFCoefficients(10);
 	}
 
-	public void update (Gamepad gamepad2, Telemetry telemetry) {
+	public void update (Gamepad gamepad2, Gamepad gamepad1, Telemetry telemetry) {
 
 		if (!startupCompleted) {
 			startupReset();
@@ -79,8 +79,8 @@ public class VulcanTurretBlue {
 
 			} else {
 				setAutoAimTurretTargetAngle(xStartPosition, yStartPosition, xTargetPosition, yTargetPosition);
-				driver2TurretCorrection(gamepad2);
-				toAngle(autoAimTurretTargetAngle + 13 + driver2TurretCorrection);
+				driver1TurretCorrection(gamepad1);
+				toAngle(autoAimTurretTargetAngle + 13 + driver1TurretCorrection);
 				odometryReset(gamepad2);
 				autoTurretTelemetryPrintout(telemetry);
 				calculateDistanceFromGoal();
@@ -159,9 +159,12 @@ public class VulcanTurretBlue {
 		}
 	}
 
-	public void driver2TurretCorrection(Gamepad gamepad2) {
-		if (gamepad2.left_stick_x != 0) {
-			driver2TurretCorrection += gamepad2.left_stick_x/3;
+	public void driver1TurretCorrection(Gamepad gamepad1) {
+		if (gamepad1.dpad_right) {
+			driver1TurretCorrection += 0.25;
+		}
+		if (gamepad1.dpad_left) {
+			driver1TurretCorrection -= 0.25;
 		}
 	}
 
@@ -224,7 +227,7 @@ public class VulcanTurretBlue {
 	//	telemetry.addData("💥💥💥Angle Offset💥💥💥", angleOffset);
 	//	telemetry.addData("Auto Aim Turret Target Angle", autoAimTurretTargetAngle);
 		telemetry.addData("Distance From Goal", distanceFromGoal);
-		telemetry.addData("Turret Correction", driver2TurretCorrection);
+		telemetry.addData("Turret Correction", driver1TurretCorrection);
 	}
 }
 

@@ -37,7 +37,7 @@ public class VulcanTurretRed {
 	double xTargetPosition;
 	double yTargetPosition;
 
-	double driver2TurretCorrection;
+	double driver1TurretCorrection;
 
 	GoBildaPinpointDriver pinpoint;
 	double distanceFromGoal;
@@ -58,7 +58,7 @@ public class VulcanTurretRed {
 		yStartPosition = 8.75;
 		xTargetPosition = 138;
 		yTargetPosition = 138;
-		driver2TurretCorrection = 0;
+		driver1TurretCorrection = 0;
 
 		drive = new Drive(hardwareMap);
 
@@ -67,7 +67,7 @@ public class VulcanTurretRed {
 		turretMotor.setPositionPIDFCoefficients(10);
 	}
 
-	public void update (Gamepad gamepad2, Telemetry telemetry) {
+	public void update (Gamepad gamepad2, Gamepad gamepad1, Telemetry telemetry) {
 		if (!startupCompleted) {
 			startupReset();
 			telemetryPrintout(telemetry);
@@ -79,8 +79,8 @@ public class VulcanTurretRed {
 				calculateDistanceFromGoal();
 			} else {
 				setAutoAimTurretTargetAngle(xStartPosition, yStartPosition, xTargetPosition, yTargetPosition);
-				driver2TurretCorrection(gamepad2);
-				toAngle(autoAimTurretTargetAngle + 13 + driver2TurretCorrection);
+				driver1TurretCorrection(gamepad1);
+				toAngle(autoAimTurretTargetAngle + 13 + driver1TurretCorrection);
 				odometryReset(gamepad2);
 				autoTurretTelemetryPrintout(telemetry);
 				calculateDistanceFromGoal();
@@ -159,9 +159,12 @@ public class VulcanTurretRed {
 		return autoAimTurretTargetAngle;
 	}
 
-	public void driver2TurretCorrection(Gamepad gamepad2) {
-		if (gamepad2.left_stick_x != 0) {
-			driver2TurretCorrection += gamepad2.left_stick_x/3;
+	public void driver1TurretCorrection(Gamepad gamepad1) {
+		if (gamepad1.dpad_right) {
+			driver1TurretCorrection += 0.25;
+		}
+		if (gamepad1.dpad_left) {
+			driver1TurretCorrection -= 0.25;
 		}
 	}
 

@@ -51,7 +51,7 @@ public class VulcanMainBlue extends OpMode {
 		vulcanLift.update(gamepad1, telemetry);
 		vulcanShooter.update(vulcanTurretBlue.shooterSpeedDecision(), gamepad1, telemetry);
 		vulcanHood.update(gamepad2, telemetry);
-		vulcanTurretBlue.update(gamepad2, telemetry);
+		vulcanTurretBlue.update(gamepad2, gamepad1, telemetry);
 	}
 }
 
