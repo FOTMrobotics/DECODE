@@ -17,21 +17,42 @@ import org.fotmrobotics.trailblazer.Vector2D;
 
 @Autonomous
 public class RedFarAuto extends LinearOpMode {
-	Drive drive = new Drive(hardwareMap);
-//	VulcanHood vulcanHood = new VulcanHood(hardwareMap);
-//	VulcanIntake vulcanIntake = new VulcanIntake(hardwareMap);
-//	VulcanLift vulcanLift = new VulcanLift(hardwareMap);
-//	VulcanShooter vulcanShooter = new VulcanShooter(hardwareMap);
-//	VulcanTurretBlue vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
-//	VulcanTurretRed vulcanTurretRed = new VulcanTurretRed(hardwareMap);
-	ElapsedTime timer = new ElapsedTime();
 
 	@Override
 	public void runOpMode() throws InterruptedException {
-		Path path = new PathBuilder(drive, new Vector2D(0,0))
-				.point(new Vector2D(0, 5))
 
-				.point(new Vector2D(20, 20))
+		Drive drive = new Drive(hardwareMap);
+	VulcanHood vulcanHood = new VulcanHood(hardwareMap);
+	VulcanIntake vulcanIntake = new VulcanIntake(hardwareMap);
+	VulcanLift vulcanLift = new VulcanLift(hardwareMap);
+	VulcanShooter vulcanShooter = new VulcanShooter(hardwareMap);
+	VulcanTurretBlue vulcanTurretBlue = new VulcanTurretBlue(hardwareMap);
+	VulcanTurretRed vulcanTurretRed = new VulcanTurretRed(hardwareMap);
+		ElapsedTime timer = new ElapsedTime();
+
+		waitForStart();
+		Path path = new PathBuilder(drive, new Vector2D(0,0))
+				.headingConstant(0)
+				.action(0.0, () -> {
+					vulcanTurretRed.startupReset();
+					return false;
+				})
+				.action(0.0, () -> {
+					vulcanTurretRed.toAngle(vulcanTurretRed.setAutoAimTurretTargetAngle(89.5, 8.75, 138, 138) + 13);
+					return false;
+				})
+				.point(new Vector2D(0, 25))
+
+				.action(0.0, () -> {
+					vulcanShooter.shooterOnOff(2050);
+					return false;
+				})
+
+//				.action(0.0, () -> {
+//					vulcanLift.addIndex();
+//					vulcanLift.setPosition(vulcanLift.indexToTargetPosition(vulcanLift.addIndex()));
+//				})
+	//			.point(new Vector2D(20, 20))
 
 				.build();
 

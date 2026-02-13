@@ -77,8 +77,9 @@ public class VulcanLift {
 		leftBumperIsPressed = gamepad1.left_bumper;
 	}
 
-	public void indexToTargetPosition(int currentIndex) {
+	public double indexToTargetPosition(int currentIndex) {
 		targetPosition = (positions[currentIndex]);
+		return targetPosition;
 	}
 
 	public void setPosition() {

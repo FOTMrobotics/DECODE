@@ -59,7 +59,7 @@ public class VulcanAutoMove extends LinearOpMode {
 			fLMotor.setPower(-0.3);
 			fRMotor.setPower(-0.3);
 
-			sleep(1500);
+			sleep(1000);
 
 			bLMotor.setPower(0);
 			bRMotor.setPower(0);

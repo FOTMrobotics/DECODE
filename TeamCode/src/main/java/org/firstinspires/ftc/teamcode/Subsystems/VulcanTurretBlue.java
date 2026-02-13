@@ -106,6 +106,7 @@ public class VulcanTurretBlue {
 	}
 
 	public void startupReset() {
+		boolean startupReset = false;
 		if (!startupCompleted) {
 			turretMotor.setPower(0.2);
 			if (!turretLimitSwitch.getState()) {
@@ -116,6 +117,7 @@ public class VulcanTurretBlue {
 				turretTargetAngle = 0;
 				turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 				startupCompleted = true;
+				this.startupCompleted = true;
 			}
 		}
 	}
